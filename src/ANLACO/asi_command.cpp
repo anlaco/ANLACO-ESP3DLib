@@ -32,7 +32,6 @@ bool ASI_COMMAND::execute_internal_command(int cmd,
         // Ejemplo: [ASI100]P=valor
         String p = get_param(cmd_params, "P=", true);
         espresponse->print("ASI100 ha recibido P=");
-        espresponse->println(p);
         return true;
       }
       case 101: {

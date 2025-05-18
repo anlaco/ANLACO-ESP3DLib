@@ -24,4 +24,3 @@ public:
 #endif
 };
 
-#endif // ASI_COMMAND_H
