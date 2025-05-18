@@ -31,6 +31,7 @@
 #include "wifiservices.h"
 #include "serial2socket.h"
 #include "command.h"
+#include "ANLACO/asi_command.h"
 #include <WebSocketsServer.h>
 #include <WiFi.h>
 #include <FS.h>
@@ -453,6 +454,29 @@ void Web_Server::handle_web_command ()
         _webserver->send (200, "text/plain", "Invalid command");
         return;
     }
+    //ANLACO START
+    cmd.trim();
+    int ASIpos = cmd.indexOf("[ASI");
+    if (ASIpos > -1) {
+        int ASIpos2 =cmd.indexOf ("]", ASIpos);
+        if (ASIpos2 > -1) {
+            String cmd_part1 = cmd.substring (ESPpos + 4, ESPpos2);
+            String cmd_part2 = "";
+            //is there space for parameters?
+            if (ESPpos2 < cmd.length() ) {
+                cmd_part2 = cmd.substring (ESPpos2 + 1);
+            }
+            //if command is a valid number then execute command
+            if (cmd_part1.toInt() >= 0) {
+                ESPResponseStream espresponse(_webserver);
+                //commmand is web only
+                ASI_COMMAND::execute_internal_command (cmd_part1.toInt(), cmd_part2, auth_level, &espresponse);
+                //flush
+                espresponse.flush();
+            }
+        }
+    }
+    //ANLACO END
     //if it is internal command [ESPXXX]<parameter>
     cmd.trim();
     int ESPpos = cmd.indexOf ("[ESP");
