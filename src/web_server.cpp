@@ -454,17 +454,20 @@ void Web_Server::handle_web_command ()
         _webserver->send (200, "text/plain", "Invalid command");
         return;
     }
+    //if it is internal command [ESPXXX]<parameter>
+    cmd.trim();
+    int ESPpos = cmd.indexOf ("[ESP");
     //ANLACO START
     cmd.trim();
     int ASIpos = cmd.indexOf("[ASI");
     if (ASIpos > -1) {
         int ASIpos2 =cmd.indexOf ("]", ASIpos);
         if (ASIpos2 > -1) {
-            String cmd_part1 = cmd.substring (ESPpos + 4, ESPpos2);
+            String cmd_part1 = cmd.substring (ASIpos + 4, ASIpos2);
             String cmd_part2 = "";
             //is there space for parameters?
-            if (ESPpos2 < cmd.length() ) {
-                cmd_part2 = cmd.substring (ESPpos2 + 1);
+            if (ASIpos2 < cmd.length() ) {
+                cmd_part2 = cmd.substring (ASIpos2 + 1);
             }
             //if command is a valid number then execute command
             if (cmd_part1.toInt() >= 0) {
@@ -475,11 +478,8 @@ void Web_Server::handle_web_command ()
                 espresponse.flush();
             }
         }
-    }
+    } else
     //ANLACO END
-    //if it is internal command [ESPXXX]<parameter>
-    cmd.trim();
-    int ESPpos = cmd.indexOf ("[ESP");
     if (ESPpos > -1) {
         //is there the second part?
         int ESPpos2 = cmd.indexOf ("]", ESPpos);

@@ -21,6 +21,8 @@
 #ifndef ESPCOM_H
 #define ESPCOM_H
 #include "esp3dlibconfig.h"
+#include <Arduino.h>
+
 //Authentication levels
 typedef enum {
     LEVEL_GUEST = 0,

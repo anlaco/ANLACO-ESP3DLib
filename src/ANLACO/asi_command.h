@@ -1,9 +1,9 @@
 // src/asi_command.h
 
 
-#include "espcom.h"    // para ESPResponseStream
+#include "../espcom.h"    // para ESPResponseStream
 #include <Arduino.h>   // para String
-#include "command.h"   // para level_authenticate_type
+#include "../command.h"   // para level_authenticate_type
 
 class ASI_COMMAND {
 public:
