@@ -1,5 +1,6 @@
 // src/asi_command.cpp
 #include "asi_command.h"
+#include "../ANLACO/anlaco_status.h"
 
 String ASI_COMMAND::get_param(String& cmd_params,
                               const char* id,
@@ -42,6 +43,12 @@ bool ASI_COMMAND::execute_internal_command(int cmd,
         }
 #endif
         espresponse->println("ASI101 OK");
+        return true;
+      }
+      case 105: {
+        String hotend_temp_msg = "La temperatura del hotend es :" + String(ANLACO::status.hotend_temp);
+        
+        espresponse->print(hotend_temp_msg.c_str());
         return true;
       }
       // … más casos ASIXXX …
