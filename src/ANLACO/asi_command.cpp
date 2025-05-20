@@ -46,8 +46,21 @@ bool ASI_COMMAND::execute_internal_command(int cmd,
         return true;
       }
       case 105: {
-        String hotend_temp_msg = "La temperatura del hotend es :" + String(ANLACO::status.hotend_temp);
-        
+        // ok T:25.00 /0.00 B:100.00 /0.00 @:0 B@:0
+        String hotend_temp_msg = "ok T:";
+        hotend_temp_msg += ANLACO::status.hotend_temp;
+        hotend_temp_msg += " /";
+        hotend_temp_msg += ANLACO::status.target_hotend_temp; // /0.00
+        hotend_temp_msg += " B:";
+        hotend_temp_msg += ANLACO::status.bed_temp;
+        hotend_temp_msg += " /";
+        hotend_temp_msg += ANLACO::status.target_bed_temp; // /0.00
+        hotend_temp_msg += " @:";
+        hotend_temp_msg += "0"; // @:0";
+        hotend_temp_msg += " B@:";
+        hotend_temp_msg += "0"; // B@:0
+        hotend_temp_msg += "\n";
+        // Enviar la respuesta al cliente
         espresponse->print(hotend_temp_msg.c_str());
         return true;
       }
