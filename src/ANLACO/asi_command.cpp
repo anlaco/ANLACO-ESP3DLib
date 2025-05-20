@@ -56,9 +56,9 @@ bool ASI_COMMAND::execute_internal_command(int cmd,
         hotend_temp_msg += " /";
         hotend_temp_msg += ANLACO::status.target_bed_temp; // /0.00
         hotend_temp_msg += " @:";
-        hotend_temp_msg += "0"; // @:0";
+        hotend_temp_msg += ANLACO::status.hotend_power; // @:0";
         hotend_temp_msg += " B@:";
-        hotend_temp_msg += "0"; // B@:0
+        hotend_temp_msg += ANLACO::status.bed_power; // B@:0
         hotend_temp_msg += "\n";
         // Enviar la respuesta al cliente
         espresponse->print(hotend_temp_msg.c_str());
