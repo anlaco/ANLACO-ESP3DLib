@@ -168,6 +168,7 @@ bool Web_Server::begin()
 #if defined(SDSUPPORT)
     //Direct SD management
     _webserver->on("/upload", HTTP_ANY, handle_direct_SDFileList,SDFile_direct_upload);
+    _webserver->on("/upload_serial", HTTP_ANY, handle_direct_SDFileList,SDFile_direct_upload);
 #endif
 
 #ifdef CAPTIVE_PORTAL_FEATURE
